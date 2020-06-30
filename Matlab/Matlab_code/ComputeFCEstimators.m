@@ -177,7 +177,6 @@ save(strcat(root_db,'Cov_Training_All.mat'),'MatCov');
 % testing files
 clc
 MatCov=[];
-root='/Volumes/LaCie/Processing/Clinical-_BCI_WCCI_2020/ChallengeBCI_2020/data/';
 nb_subj=8;
 for i=1:nb_subj
         cd(strcat(root,'parsed_P0',num2str(i),'E/parsed_P0',num2str(i),'E_all'));
@@ -191,3 +190,76 @@ for i=1:nb_subj
         MatCov{i,1}=tempCov;
 end
 save(strcat(root_db,'Cov_Testing.mat'),'MatCov');
+
+%% Subject 09 & 10
+clc
+
+MatICoh=[];
+MatCoh=[];
+MatPLV=[];
+MatAEC=[];
+MatCov=[];
+
+for i=9:10
+    if i==9
+        cd(strcat(root,'parsed_P0',num2str(i),'E/parsed_P0',num2str(i),'E_all'));
+    else
+        cd(strcat(root,'parsed_P',num2str(i),'E/parsed_P',num2str(i),'E_all'));
+    end
+        temp= dir('timefreq_connectn_cohere*');
+        
+        tempdata=[];
+        for j=1:40
+            load(temp(j).name)
+            FreqInfos=Freqs;
+            vector=mean(TF(:,1,idxStartAlpha:idxEndBeta),3);
+            tempdata(:,:,j)=DoMyMatrixFromVect(vector,nb_chan,nb_Freq);
+        end
+        MatICoh{i-8,1}=tempdata;
+         
+        tempdata=[];
+        for j=41:80
+            load(temp(j).name)
+            FreqInfos=Freqs;
+            vector=mean(TF(:,1,idxStartAlpha:idxEndBeta),3);
+            tempdata(:,:,j-40)=DoMyMatrixFromVect(vector,nb_chan,nb_Freq);
+        end   
+        MatCoh{i-8,1}=tempdata;
+        
+        % AEC
+        temp= dir('timefreq_connectn_aec*');
+        tempdata=[];
+        for j=1:length(temp)
+            load(temp(j).name)
+            FreqInfos=Freqs;
+            vector=mean(TF(:,1,1:2),3);
+            tempdata(:,:,j)=DoMyMatrixFromVect(vector,nb_chan,nb_Freq);
+        end
+        MatAEC{i-8,1}=tempdata;
+        
+        % PLV
+        temp = dir('timefreq_connectn_plv*');
+        for j=1:length(temp)
+            load(temp(j).name)
+            FreqInfos=Freqs;
+            vector=mean(TF(:,1,1:2),3);
+            tempdata(:,:,j)=DoMyMatrixFromVect(vector,nb_chan,nb_Freq);
+        end       
+        MatPLV{i-8,1}=tempdata;
+
+        
+        % Cov from filtered data
+        temp_all= dir('*_band.mat');
+        tempCov=[];
+        for j=1:length(temp_all)
+            load(temp_all(j).name);
+            tempCov(:,:,j)=cov(F'); 
+        end
+        MatCov{i-8,1}=tempCov;
+end
+
+save(strcat(root_db,'ICoh_Testing_P09P10_121240.mat'),'FreqInfos','MatICoh');
+save(strcat(root_db,'Coh_Testing_P09P10_121240.mat'),'FreqInfos','MatCoh');
+save(strcat(root_db,'AEC_Testing_P09P10_121240.mat'),'FreqInfos','MatAEC');
+save(strcat(root_db,'PLV_Testing_P09P10_121240.mat'),'FreqInfos','MatPLV');
+save(strcat(root_db,'Cov_Testing_P09P10.mat'),'MatCov');
