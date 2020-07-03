@@ -13,7 +13,7 @@ The .mat files are opened in Python to make the prediction.
 
 - Download the dataset from [GitHub](https://github.com/5anirban9/Clinical-Brain-Computer-Interfaces-Challenge-WCCI-2020-Glasgow)
 - Run "ComputeFCEstimators.m" matlab file to extract the features (in /Matlab/Matlab_code)
-- Run jupyter notebook and execute the cells
+- Run "python rigoletto-predict.py"
 
 The extracted features are available in /Matlab/Matlab_db in .mat files (cf the associated subfolders) or via the Brainstorm project ("RIGOLETTO_bst_project").
 
