@@ -111,7 +111,7 @@ def load_data(feat, subj, idx, phase):
                             "Cov_Testing_P09P10.mat",
                             squeeze_me=True)
             else:
-                d = loadmat("Matlab/Matlab_db/P09E_P10E" + feat +
+                d = loadmat("Matlab/Matlab_db/P09E_P10E/" + feat +
                             "_Testing_P09P10_121240.mat", squeeze_me=True)
             X = np.array(np.transpose(d['Mat'+feat][subj-8], axes=(2, 0, 1)))
             for i in range(len(X)):
@@ -132,7 +132,7 @@ def load_data(feat, subj, idx, phase):
             d1 = loadmat("Matlab/Matlab_db/Training/" +
                          feat + "_Training_121280.mat",
                          squeeze_me=True)
-            d2 = loadmat("Matlab/Matlab_db/Testing" +
+            d2 = loadmat("Matlab/Matlab_db/Testing/" +
                          feat + "_Testing_121240.mat",
                          squeeze_me=True)
         X1 = np.array(np.transpose(d1['Mat'+feat][subj, 0], axes=(2, 0, 1)))
