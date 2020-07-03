@@ -411,10 +411,6 @@ for s in trange(8):
     pipelines['fgMDM-Cov'] = make_pipeline(
         FeatConn("Cov", s, "train"),
         FgMDM2(metric='logeuclid', tsupdate=True, n_jobs=n_jobs))
-    pipelines['CSP-LDA'] = make_pipeline(
-        FeatConn("signal", s),
-        CSP(n_components=6, reg='ledoit_wolf'), 
-        LDA())
     estimators = [('cov', pipelines['fgMDM-Cov']),
                   ('coh', pipelines['fgMDM-Coh']),
                   ('plv', pipelines['fgMDM-PLV'])
@@ -426,7 +422,6 @@ for s in trange(8):
             stack_method='predict_proba')
     pipelines['Ensemble'] = scl
 
-    pipelines['CSP-LDA'].fit(X_train, y_train)
     pipelines['Ensemble'].fit(X_train, y_train)
     cross_subj.append({'X_train': X_train, 'y_train': y_train, 
                        'pipelines': pipelines, 
