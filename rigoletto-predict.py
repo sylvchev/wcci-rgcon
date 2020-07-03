@@ -2,9 +2,6 @@ from warnings import simplefilter
 
 from joblib import Parallel, delayed
 
-import mne
-from mne.decoding import CSP
-
 import numpy as np
 
 import pandas as pd
@@ -281,8 +278,6 @@ class MDM2(BaseEstimator, ClassifierMixin, TransformerMixin):
 # Remove warnings
 ###############################################################################
 
-mne.set_log_level('ERROR')
-
 # ignore all future warnings
 simplefilter(action='ignore', category=FutureWarning)
 
@@ -422,7 +417,8 @@ for s in trange(8):
             stack_method='predict_proba')
     pipelines['Ensemble'] = scl
 
-    pipelines['Ensemble'].fit(X_train, y_train)
+q
+pipelines['Ensemble'].fit(X_train, y_train)
     cross_subj.append({'X_train': X_train, 'y_train': y_train, 
                        'pipelines': pipelines, 
                        'mean': mean_covariance(mat[atf], metric='riemann', sample_weight=None)})

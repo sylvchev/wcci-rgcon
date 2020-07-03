@@ -16,6 +16,8 @@ The .mat files are opened in Python to make the prediction.
 - Run "python rigoletto-predict.py"
 
 The extracted features are available in /Matlab/Matlab_db in .mat files (cf the associated subfolders) or via the Brainstorm project ("RIGOLETTO_bst_project").
+The necessary packages for running the python script are indicated in the `requirements.txt` file and could be installed with `pip install -r requirements.txt`.
+
 
 
 # Licence
